@@ -9,7 +9,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->paginate(15); // Get 15 latest posts with pagination as special feature.
+        $posts = Post::latest()->paginate(10); // Get 10 latest posts with pagination as special feature.
         return view('posts.index',compact('posts'));
     }
 

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +15,14 @@ class PostFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
-    {
+    protected $model = Post::class;
+    public function definition() {
         return [
-            //
+        "title" => $this->faker->realText($maxNbChars = 20, $indexSize = 2),
+        "description" => $this->faker->realText($maxNbChars = 200, $indexSize = 2),
+        'photo_url' => 'https://picsum.photos/id/237/600/400',
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
-    }
+        }
 }
