@@ -9,7 +9,14 @@ class PostController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $posts = Post::latest()->paginate(15); // Get 15 latest posts with pagination as special feature.
+        return view('posts.index',compact('posts'));
+    }
+
+    public function show($id)
+    {
+        $post = Post::findOrFail($id); // Get post with id.
+        return view('posts.show',compact('post'));
     }
     public function create()
     {
@@ -19,27 +26,28 @@ class PostController extends Controller
     public function store(Request $request)
     {
         Post::create($request->all());
-        return redirect('posts')->with('success', 'Post created successfully.');
+
+        return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
 
     public function edit($id)
     {
         $post = Post::findOrFail($id);
-        return view('posts.edit', compact('Post'));
+        return view('posts.edit', compact('post'));
     }
 
     public function update(Request $request, $id)
     {
         $post = Post::findOrFail($id);
         $post->update($request->all());
-        return redirect('posts')->with('success', 'Post updated successfully.');
+        return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
     }
 
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
         $post->delete();
-        return redirect('posts')->with('success', 'Post deleted successfully.');
+        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
     }
-    //
+
 }

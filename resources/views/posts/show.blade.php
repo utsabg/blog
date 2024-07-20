@@ -1,16 +1,19 @@
 @extends('layouts.app')
 @section('content')
-@foreach($posts as $post)
+
     <div>
-        this is the post
-        <h3>{{ $post->title }}</h3>
-        <p>{{ $post->description }}</p>
-        <a href="{{ url('posts/'.$post->id.'/edit') }}">Edit</a>
-        <form action="{{ url('posts/'.$post->id) }}" method="POST">
-            @csrf
-            @method('DELETE')
-            <button type="submit">Delete</button>
-        </form>
+        <div class="card mt-2">
+            <div class="card-header">
+                <h4 class="card-title">{{ $post->title }}</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{ $post->description }}</p>
+                <form action="{{route('post.delete',$post->id)}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                <a class="btn btn-info" href="{{ route('post.edit',$post->id) }}" class="btn btn-primary">Edit</a>
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            </div>
     </div>
-@endforeach
 @endsection
