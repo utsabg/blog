@@ -14,6 +14,7 @@
                     <textarea class="form-control" name="description" id="description" required rows="3"></textarea>
                 </div>
                 <button class="btn btn-primary" type="submit">Create a post</button>
+                <a class="btn btn-secondary " href="{{ route('posts.index') }}" class="btn btn-primary">Back</a>
 
             </form>
 
