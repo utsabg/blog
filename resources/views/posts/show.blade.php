@@ -13,6 +13,8 @@
                     @method('DELETE')
                 <a class="btn btn-info" href="{{ route('post.edit',$post->id) }}" class="btn btn-primary">Edit</a>
                     <button class="btn btn-danger" type="submit">Delete</button>
+                <a class="btn btn-secondary" href="{{ route('posts.index') }}" class="btn btn-primary">Back</a>
+
                 </form>
             </div>
     </div>
