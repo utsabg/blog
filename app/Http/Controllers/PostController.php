@@ -25,6 +25,10 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            ]);
         Post::create($request->all());
 
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
@@ -39,6 +43,10 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::findOrFail($id);
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            ]);
         $post->update($request->all());
         return redirect()->route('posts.index')->with('success', 'Post updated successfully.');
     }

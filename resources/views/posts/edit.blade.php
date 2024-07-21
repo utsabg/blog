@@ -17,10 +17,10 @@
                 <a href="{{ route('posts.index') }}" class="btn btn-secondary float-end">Cancel</a>
             </form>
 
-            <div class="card-footer"><form action="{{route('post.delete',$post->id)}}" method="POST">
+            <div class="card-footer p-0 pt-2"><form action="{{route('post.delete',$post->id)}}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button class="btn btn-danger" type="submit">Delete</button>
+                    <button class="btn btn-danger " type="submit">Delete</button>
                 </div> </form>
 
 
