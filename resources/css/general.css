@@ -74,3 +74,28 @@
       .bd-mode-toggle .dropdown-menu .active .bi {
         display: block !important;
       }
+
+      .sidebar {
+        height: 100vh;
+        overflow-y: auto;
+      }
+
+      .offcanvas-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .offcanvas-body > ul {
+        flex-grow: 1;
+      }
+
+      .offcanvas-body > ul:last-child {
+        margin-top: auto;
+        position: sticky;
+        bottom: 0;
+      }
+
+      /* .has-error{
+        border: 1px solid red;
+      } */
