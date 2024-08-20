@@ -38,6 +38,7 @@ Created required views and tested if other user can access or not wy establishin
 
 Perodically pushed to git for version control.
 
+
 ### Challenges Faced
 Mongo Db connection -  I faced issues with database connection as it had few issues later refreshed the code and started fresh to resolve it. Another issue i faced was using default authentication for some reasun it was not connecting well with database when wrong input was used to login later fixed it implementing my own validation rather than default which took me extra time beyond deadline.
 
