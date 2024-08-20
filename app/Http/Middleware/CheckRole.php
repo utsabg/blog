@@ -10,12 +10,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CheckRole
 {
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->hasRole($role)) {
-            return $next($request);
+        if (!Auth::check() || Auth::user()->role !== 'admin') {
+            abort(403, 'Access denied');
         }
 
-        return redirect()->route('home');
+        return $next($request);
     }
 }

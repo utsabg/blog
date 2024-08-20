@@ -8,51 +8,44 @@
             @csrf
             @method('PUT')
 
-            <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+            <div class="form-group {{ $errors->has('name') ? 'has-validation' : '' }}">
                 <label for="name">User Name</label>
                 <input type="text" id="name" name="name" class="form-control"
-                    value="{{ isset($user) ? $user->name : '' }}" required>
+                       value="{{ isset($user) ? $user->name : '' }}" required>
 
                 @if ($errors->has('name'))
-                    <p class="helper-block invalid-feedback">
+                    <div class="invalid-feedback">
                         {{ $errors->first('name') }}
-                    </p>
+                    </div>
                 @endif
             </div>
 
-            <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
+            <div class="form-group {{ $errors->has('email') ? 'has-validation' : '' }}">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" class="form-control"
-                    value="{{ isset($user) ? $user->email : '' }}" required>
+                       value="{{ isset($user) ? $user->email : '' }}" required>
 
                 @if ($errors->has('email'))
-                    <p class="helper-block invalid-feedback">
+                    <div class="invalid-feedback">
                         {{ $errors->first('email') }}
-                    </p>
+                    </div>
                 @endif
             </div>
 
-            <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
+            <div class="form-group {{ $errors->has('password') ? 'has-validation' : '' }}">
                 <label for="password">Password</label>
 
                 <input type="password" id="password" name="password" class="form-control"
-                    placeholder="Leave empty for old one">
+                       placeholder="Leave empty for old one">
 
                 @if ($errors->has('password'))
-                    <p class="helper-block invalid-feedback">
+                    <div class="invalid-feedback">
                         {{ $errors->first('password') }}
-                    </p>
+                    </div>
                 @endif
             </div>
-            {{-- <div class="form-group ">
-                <label for="password-confirm"
-                    class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
-
-                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required
-                    autocomplete="new-password">
-            </div> --}}
-            <div class="form-group {{ $errors->has('role') ? 'has-error' : '' }}">
+            <div class="form-group {{ $errors->has('role') ? 'has-validation' : '' }}">
                 <label for="role">Role</label>
                 <select name="role" id="role" class="form-control" required>
                     <option value="viewer" {{ (isset($user) ? $user->role : '') == 'viewer' ? 'selected' : '' }}>Viewer
@@ -64,9 +57,9 @@
                 </select>
 
                 @if ($errors->has('role'))
-                    <p class="helper-block invalid-feedback">
+                    <div class="invalid-feedback">
                         {{ $errors->first('role') }}
-                    </p>
+                    </div>
                 @endif
             </div>
             <div>

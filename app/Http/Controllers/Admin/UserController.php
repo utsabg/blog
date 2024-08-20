@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -10,6 +11,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if (Auth::user()->role !== 'admin') {
+                abort(403, 'Access denied');
+            }
+            return $next($request);
+        });
+    }
     public function index()
     {
         if (Auth::user()->role != 'admin') {
@@ -64,19 +75,30 @@ class UserController extends Controller
         if (Auth::user()->role !== 'admin') {
             abort(Response::HTTP_FORBIDDEN, '403 Forbidden');
         }
+
+
+
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['string', 'min:8'],
-            'role' => ['required'],
+    'name' => ['required', 'string', 'max:255'],
+    'email' => ['required', 'string', 'email', 'max:255'],
+    'password' => ['nullable'],
+    'role' => ['required'],
         ]);
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
 
-        $user->update($request->all());
+        $data = $request->all();
+        if (!empty($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        } else {
+            unset($data['password']);
+        }
 
+        // $user->update($data)0;
+        $user->update($data);
+        // dd($request->all());
         return redirect()->route('admin.users.index');
     }
 

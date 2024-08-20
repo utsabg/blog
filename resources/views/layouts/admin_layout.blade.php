@@ -12,14 +12,9 @@
 
     {{-- <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/"> --}}
 
-
-
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"> --}}
 
     {{-- <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
-
-
-
 
     <!-- Custom styles for this template -->
     <!-- Custom styles for this template -->
@@ -173,7 +168,7 @@
                     data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false"
                     aria-label="Toggle search">
                     <svg class="bi">
-                        <use xlink:href="#search" />
+                        <use xlink:href="#search"/>
                     </svg>
                 </button>
             </li>
@@ -208,31 +203,44 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page"
-                                    href="{{route('dashboard')}}">
+                                    href="{{ route('dashboard') }}">
                                     <svg class="bi">
                                         <use xlink:href="#house-fill" />
                                     </svg>
                                     Dashboard
                                 </a>
                             </li>
+                            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="toast-header">
+                                  <img src="..." class="rounded me-2" alt="...">
+                                  <strong class="me-auto">Bootstrap</strong>
+                                  <small>11 mins ago</small>
+                                  <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                </div>
+                                <div class="toast-body">
+                                  Hello, world! This is a toast message.
+                                </div>
+                              </div>  @if (Auth::user()->isAdmin() || Auth::user()->isEditor() )
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2" href="{{ route('admin.posts.index') }}">
+                                <a class="nav-link d-flex align-items-center gap-2"
+                                    href="{{ route('posts.index') }}">
                                     <svg class="bi">
                                         <use xlink:href="#file-earmark" />
                                     </svg>
-                                    Posts
+                                  My Posts
                                 </a>
                             </li>
+                            @endif
                             @if (Auth::user()->isAdmin())
-                                  <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2"
-                                    href="{{ route('admin.users.index') }}">
-                                    <svg class="bi">
-                                        <use xlink:href="#people" />
-                                    </svg>
-                                    Users
-                                </a>
-                            </li>
+                                <li class="nav-item">
+                                    <a class="nav-link d-flex align-items-center gap-2"
+                                        href="{{ route('admin.users.index') }}">
+                                        <svg class="bi">
+                                            <use xlink:href="#people" />
+                                        </svg>
+                                        Users
+                                    </a>
+                                </li>
                             @endif
 
                             {{-- <li class="nav-item">
@@ -283,16 +291,20 @@
                 </div>
             </div>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <main class="py-4">
+                <main class="py-4">
 
-                <div class="container mb-3">
-                    <div class="row justify-content-center">
-                        <!--content Section -->
-                        @yield('content')
+                    <div class="container mb-3">
+                        <div class="row justify-content-center">
+                            <!--content Section -->
+                            @yield('content')
+                            @yield('posts')
+
+                        </div>
                     </div>
-                </div>
-
-            </main>
+                    <div aria-live="polite" aria-atomic="true" class="position-fixed bottom-0 end-0 p-3">
+                        <div id="toastContainer"></div>
+                    </div>
+                </main>
             </main>
 
         </div>
@@ -303,6 +315,39 @@
         integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous">
     </script>
     <script src="dashboard.js"></script>
+    <script>
+        // Function to show a toast message
+        function showToast(message, type = 'info')
+        {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.classList.add('toast', `toast-${type}`, 'show', 'fade', 'mt-3');
+            toast.setAttribute('role', 'alert');
+            toast.innerHTML = `
+                <div class="toast-header">
+                    <strong class="me-auto">${type.charAt(0).toUpperCase() + type.slice(1)}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">${message}</div>
+            `;
+            toastContainer.appendChild(toast);
+
+            // Automatically hide the toast after 5 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 5000);
+        }
+
+        // Check for any messages from Laravel
+        @if (session('success'))
+            showToast('{{ session('success') }}', 'success');
+        @elseif (session('error'))
+            showToast('{{ session('error') }}', 'danger');
+        @endif
+    </script>
 </body>
 
 </html>
