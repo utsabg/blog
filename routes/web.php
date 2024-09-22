@@ -19,6 +19,10 @@ Route::get('/', function () {
     }
 })->name('home');
 
+Route::get('/allposts', function () {
+        return view('allpost');
+})->name('allpost');
+
 Route::get('/dashboard', function () {
     $posts = Post::with('user')->paginate(10);
 
