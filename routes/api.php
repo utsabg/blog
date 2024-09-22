@@ -1,19 +1,16 @@
 <?php
 
-use App\Models\Post;
-use App\Http\Middleware\CheckRole;
-use Illuminate\Support\Facades\Auth;
-// use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\API\AuthController;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\PostController;
-use App\Http\Controllers\Admin\UserController;
-use MongoDB\Laravel\Auth\User;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\API\UserController;
+use Laravel\Sanctum\Sanctum;
 
-Route::get('/user', [UserController::class, 'index']);
+Route::get('/user', [UserController::class,'index'])->middleware('auth:sanctum');
+Route::post('/login', [AuthController::class,'login']);
 
-Route::get('/apiposts', function () {
-
-   dd(User::all());
-
-});
+// Route::get('/user', function (Request $request) {
+//     dd(User::All());
+//     return $request->user();
+// });//->middleware('auth:sanctum')

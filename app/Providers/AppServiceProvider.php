@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Providers;
-use Illuminate\Pagination\Paginator;
+use Laravel\Sanctum\Sanctum;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
+use App\Models\Sanctum\PersonalAccessToken;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,5 +23,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+        class_alias(PersonalAccessToken::class, \Laravel\Sanctum\PersonalAccessToken::class);
+
+        Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
     }
 }
